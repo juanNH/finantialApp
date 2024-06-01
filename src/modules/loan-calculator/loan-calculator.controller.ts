@@ -15,8 +15,8 @@ export class LoanCalculatorController {
    * @param {GetLoanCalculatorTableDto} loanCalculatorTableDto DTO for loan calculator table. 
    * @returns {AmortizationTable} Returns table data.
    */
-  @Get('table')
-  loanCalculatorTable(@Query() loanCalculatorTableDto: GetLoanCalculatorTableDto) {
-    return this.loanCalculatorService.loanCalculatorTable(loanCalculatorTableDto);
+  @Get('table-french-system')
+  loanCalculatorTableFrenchSystem(@Query() loanCalculatorTableDto: GetLoanCalculatorTableDto) {
+    return this.loanCalculatorService.loanCalculatorTableFrenchSystem(loanCalculatorTableDto);
   }
 }

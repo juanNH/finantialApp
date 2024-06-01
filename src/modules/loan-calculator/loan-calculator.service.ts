@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { AmortizationEntry, AmortizationTable } from './interfaces';
-import roundToTwoDecimals from 'src/common/helpers/roundToTwoDecimals.helper';
+import roundToTwoDecimals from 'src/modules/common/helpers/roundToTwoDecimals.helper';
 import { GetLoanCalculatorTableDto } from './dto';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class LoanCalculatorService {
    * @param { GetLoanCalculatorTableDto } loanCalculatorTableDto DTO for loan calculator table.
    * @returns {AmortizationTable} Returns table data.
    */
-  loanCalculatorTable(loanCalculatorTableDto: GetLoanCalculatorTableDto): AmortizationTable {
+  loanCalculatorTableFrenchSystem(loanCalculatorTableDto: GetLoanCalculatorTableDto): AmortizationTable {
     const { yearlyInterest, totalYears, loanDebth } = loanCalculatorTableDto;
     const anualInterest = yearlyInterest * 0.01;
     const totalMonths = totalYears * 12;
@@ -44,6 +44,7 @@ export class LoanCalculatorService {
     }
 
     return {
+      totalToPay: roundToTwoDecimals(monthlyPayment*totalMonths),
       monthlyPayment: monthlyPayment,
       amortizationTable,
     };

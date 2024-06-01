@@ -1,6 +1,6 @@
 import { Transform } from "class-transformer";
 import { IsNumber, IsInt } from "class-validator";
-import { toNumber } from "src/common/helpers";
+import { toNumber } from "src/modules/common/helpers";
 
 export class GetLoanCalculatorTableDto {
 

@@ -7,6 +7,7 @@ interface AmortizationEntry {
 }
 interface AmortizationTable {
     monthlyPayment: number,
+    totalToPay: number,
     amortizationTable: AmortizationEntry[];
 }
 
