@@ -66,6 +66,7 @@ let BcraService = class BcraService {
         }
         catch (error) {
             console.log(error);
+            throw error;
         }
     }
     async findAllFormated() {
@@ -74,8 +75,14 @@ let BcraService = class BcraService {
         return variablesFormatted;
     }
     async findById(bcraVariableDto) {
-        const data = await this.findAll();
-        return data.filter(item => item.idVariable === bcraVariableDto.idVariable)[0] || null;
+        try {
+            const data = await this.findAll();
+            return data.filter(item => item.idVariable === bcraVariableDto.idVariable)[0] || null;
+        }
+        catch (err) {
+            console.error(err);
+            throw err;
+        }
     }
 };
 BcraService = __decorate([

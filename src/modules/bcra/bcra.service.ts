@@ -43,6 +43,7 @@ export class BcraService {
             return data.results
         } catch (error) {
             console.log(error);
+            throw error;
         }
 
     }
@@ -61,7 +62,12 @@ export class BcraService {
      * @returns {VariablesFormatted} Object formatted to use key=>value.
      */
     async findById(bcraVariableDto: GetBcraVariableDto): Promise<BcraVariable> {
-        const data = await this.findAll();
-        return data.filter(item => item.idVariable === bcraVariableDto.idVariable)[0] || null;
+        try {
+            const data = await this.findAll();
+            return data.filter(item => item.idVariable === bcraVariableDto.idVariable)[0] || null;
+        } catch (err) {
+            console.error(err)
+            throw err;
+        }
     }
 }
