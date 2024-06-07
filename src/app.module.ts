@@ -6,26 +6,31 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { LoanCalculatorModule } from './modules/loan-calculator/loan-calculator.module';
 import { BcraModule } from './modules/bcra/bcra.module';
-import { redisStore }from 'cache-manager-redis-yet';
-
+import * as redisStore from 'cache-manager-redis-store';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
-    CacheModule.registerAsync({
-      isGlobal: true,
+    /* CacheModule.register({
+      store: redisStore,
+      password: process.env.REDIS_PASSWORD || undefined,
+      // Store-specific configuration:
+      host: process.env.REDIS_HOST || 'localhost',
+      port: Number(process.env.REDIS_PORT) || 6379,
+    }), */
+    CacheModule.register({
       useFactory: async () => ({
-        store: await redisStore({
-          socket: {
-            host: process.env.REDIS_HOST,
-            port: Number(process.env.REDIS_PORT) || 6379
-          }
-        })
-      })
+        store: redisStore as any,
+        host: process.env.REDIS_HOST || 'localhost',
+        port: Number(process.env.REDIS_PORT) || 6379,
+        password: process.env.REDIS_PASSWORD || undefined,
+
+        // ttl: 1000,
+      }),
+      isGlobal: true,
     }),
-    CacheModule.register({ isGlobal: true }),
     ConfigModule.forRoot(),
     LoanCalculatorModule,
     BcraModule,

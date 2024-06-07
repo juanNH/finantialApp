@@ -45,7 +45,6 @@ export class BcraService {
             console.log(error);
             throw error;
         }
-
     }
     /**
      * this method format the array of principal variable into key=>value object.
