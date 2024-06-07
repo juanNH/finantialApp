@@ -1,0 +1,53 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type BcraVariable {
+  idVariable: Int!
+  cdSerie: Int!
+  descripcion: String!
+  fecha: String!
+  valor: String!
+}
+
+type VariablesFormatted {
+  dolarOficial: BcraVariable
+  dolarMayorista: BcraVariable
+  tna: BcraVariable
+  badlarBancoPrivNA: BcraVariable
+  tm20: BcraVariable
+  tasaPasesActivos1dia: BcraVariable
+  tasaPasesPasivoss1dia: BcraVariable
+  baibar: BcraVariable
+  tasaDepositos30dias: BcraVariable
+  tasaPrestamosAdelanteCtaCte: BcraVariable
+  tasaPrestamosPersonales: BcraVariable
+  baseMonetaria: BcraVariable
+  circulacionMonetaria: BcraVariable
+  efectivoPoderPublico: BcraVariable
+  efectivoEntidadesFinancieras: BcraVariable
+  depositoBancosCtaCtePesos: BcraVariable
+  depositoEfectivoEntidadesFinancieras: BcraVariable!
+  ctaCteNetoFUCO: BcraVariable
+  cajaAhorro: BcraVariable
+  plazoConInversionNoCEDROS: BcraVariable
+  m2Privado30diasVarAnual: BcraVariable
+  prestamosEntFinancierasPriv: BcraVariable
+  inflacionMensual: BcraVariable
+  inflacionInteranual: BcraVariable
+  inflacionEsperadaRem12meses: BcraVariable
+  cer: BcraVariable
+  uva: BcraVariable
+  uvi: BcraVariable
+  tpm: BcraVariable
+  badlarBancosPrivEA: BcraVariable
+  icl: BcraVariable
+  tasaOperacionesPasePasiva1dia: BcraVariable
+  pasesPasivosBCRASaldo: BcraVariable
+  reservasInternacionales: BcraVariable
+}
+
+type Query {
+  variablesList: [BcraVariable!]!
+  variables: VariablesFormatted!
+}
