@@ -36,7 +36,6 @@ export class BcraService {
                 status: number,
                 errorMessages: string[],
             }>('https://api.bcra.gob.ar/estadisticas/v1/PrincipalesVariables');
-            await sleep(3000);
             const ttl = 1000 * 60 * 5
             const jsonArrayString = JSON.stringify(data.results);
             await this.cacheManager.set(key, jsonArrayString, ttl);

@@ -40,7 +40,6 @@ const common_1 = require("@nestjs/common");
 const axios_1 = require("@nestjs/axios");
 const https = __importStar(require("https"));
 const cache_manager_1 = require("@nestjs/cache-manager");
-const helpers_1 = require("../common/helpers");
 const parseVariablesToObj_1 = require("./utils/parseVariablesToObj");
 let BcraService = class BcraService {
     constructor(httpService, cacheManager) {
@@ -58,7 +57,6 @@ let BcraService = class BcraService {
                 return JSON.parse(variablesCached);
             }
             const { data } = await this.httpService.axiosRef.get('https://api.bcra.gob.ar/estadisticas/v1/PrincipalesVariables');
-            await (0, helpers_1.sleep)(3000);
             const ttl = 1000 * 60 * 5;
             const jsonArrayString = JSON.stringify(data.results);
             await this.cacheManager.set(key, jsonArrayString, ttl);
