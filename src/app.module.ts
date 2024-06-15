@@ -13,13 +13,6 @@ import * as redisStore from 'cache-manager-redis-store';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
-    /* CacheModule.register({
-      store: redisStore,
-      password: process.env.REDIS_PASSWORD || undefined,
-      // Store-specific configuration:
-      host: process.env.REDIS_HOST || 'localhost',
-      port: Number(process.env.REDIS_PORT) || 6379,
-    }), */
     CacheModule.register({
       useFactory: async () => ({
         store: redisStore as any,

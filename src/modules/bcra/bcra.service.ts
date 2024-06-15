@@ -4,7 +4,6 @@ import { HttpService } from '@nestjs/axios';
 import * as https from 'https';
 import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { sleep } from '../common/helpers';
 import { parseVariablesToObj } from './utils/parseVariablesToObj';
 import { VariablesFormatted } from './entities/bcraVariables.entity';
 import { GetBcraVariableDto } from './dto/get-bcra-variable.dto';
@@ -17,7 +16,8 @@ export class BcraService {
     ) {
         // Configure Axios to ignore certificate verification (development only)
         this.httpService.axiosRef.defaults.httpsAgent = new https.Agent({
-            rejectUnauthorized: false,
+            rejectUnauthorized: process.env.ENVIROMENT === 'develop' ? false : true,
+
         });
     }
     /**
@@ -35,8 +35,8 @@ export class BcraService {
                 results: BcraVariable[],
                 status: number,
                 errorMessages: string[],
-            }>('https://api.bcra.gob.ar/estadisticas/v1/PrincipalesVariables');
-            const ttl = 1000 * 60 * 5
+            }>(process.env.BCRA_API_URL+'/PrincipalesVariables');
+            const ttl = 1000 * 60 
             const jsonArrayString = JSON.stringify(data.results);
             await this.cacheManager.set(key, jsonArrayString, ttl);
             return data.results

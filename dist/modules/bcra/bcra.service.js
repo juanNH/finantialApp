@@ -46,7 +46,7 @@ let BcraService = class BcraService {
         this.httpService = httpService;
         this.cacheManager = cacheManager;
         this.httpService.axiosRef.defaults.httpsAgent = new https.Agent({
-            rejectUnauthorized: false,
+            rejectUnauthorized: process.env.ENVIROMENT === 'develop' ? false : true,
         });
     }
     async findAll() {
@@ -56,8 +56,8 @@ let BcraService = class BcraService {
             if (variablesCached) {
                 return JSON.parse(variablesCached);
             }
-            const { data } = await this.httpService.axiosRef.get('https://api.bcra.gob.ar/estadisticas/v1/PrincipalesVariables');
-            const ttl = 1000 * 60 * 5;
+            const { data } = await this.httpService.axiosRef.get(process.env.BCRA_API_URL + '/PrincipalesVariables');
+            const ttl = 1000 * 60;
             const jsonArrayString = JSON.stringify(data.results);
             await this.cacheManager.set(key, jsonArrayString, ttl);
             return data.results;
