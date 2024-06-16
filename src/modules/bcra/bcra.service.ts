@@ -7,7 +7,6 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { parseVariablesToObj } from './utils/parseVariablesToObj';
 import { VariablesFormatted } from './entities/bcraVariables.entity';
 import { GetBcraVariableDto } from './dto/get-bcra-variable.dto';
-import { sleep } from '../common/helpers';
 
 @Injectable()
 export class BcraService {
@@ -36,7 +35,7 @@ export class BcraService {
                 status: number,
                 errorMessages: string[],
             }>(process.env.BCRA_API_URL + '/PrincipalesVariables');
-            const ttl = 1000
+            const ttl = 1000 * 60 
             const jsonArrayString = JSON.stringify(data.results);
             await this.cacheManager.set(key, jsonArrayString, ttl);
             return data.results

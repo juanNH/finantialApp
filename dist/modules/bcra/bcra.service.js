@@ -57,7 +57,7 @@ let BcraService = class BcraService {
                 return JSON.parse(variablesCached);
             }
             const { data } = await this.httpService.axiosRef.get(process.env.BCRA_API_URL + '/PrincipalesVariables');
-            const ttl = 1000;
+            const ttl = 1000 * 60;
             const jsonArrayString = JSON.stringify(data.results);
             await this.cacheManager.set(key, jsonArrayString, ttl);
             return data.results;
