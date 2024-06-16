@@ -7,6 +7,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { parseVariablesToObj } from './utils/parseVariablesToObj';
 import { VariablesFormatted } from './entities/bcraVariables.entity';
 import { GetBcraVariableDto } from './dto/get-bcra-variable.dto';
+import { sleep } from '../common/helpers';
 
 @Injectable()
 export class BcraService {
@@ -14,14 +15,13 @@ export class BcraService {
         private readonly httpService: HttpService,
         @Inject(CACHE_MANAGER) private cacheManager: Cache,
     ) {
-        // Configure Axios to ignore certificate verification (development only)
         this.httpService.axiosRef.defaults.httpsAgent = new https.Agent({
-            rejectUnauthorized: process.env.ENVIROMENT === 'develop' ? false : true,
-
+            // Todo: try this when host change
+            rejectUnauthorized: false,// process.env.ENVIROMENT === 'develop' ? false : true,
         });
     }
     /**
-     * This method get all the princiapl variables of bcra.
+     * This method get all the principal variables of bcra.
      * @returns {BcraVariable} List of principal bcra variables.
      */
     async findAll(): Promise<BcraVariable[]> {
@@ -35,8 +35,8 @@ export class BcraService {
                 results: BcraVariable[],
                 status: number,
                 errorMessages: string[],
-            }>(process.env.BCRA_API_URL+'/PrincipalesVariables');
-            const ttl = 1000 * 60 
+            }>(process.env.BCRA_API_URL + '/PrincipalesVariables');
+            const ttl = 1000
             const jsonArrayString = JSON.stringify(data.results);
             await this.cacheManager.set(key, jsonArrayString, ttl);
             return data.results

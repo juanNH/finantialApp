@@ -51,8 +51,8 @@ AppModule = __decorate([
             cache_manager_1.CacheModule.register({
                 useFactory: async () => ({
                     store: redisStore,
-                    host: process.env.REDIS_HOST || 'localhost',
-                    port: Number(process.env.REDIS_PORT) || 6379,
+                    host: process.env.REDIS_HOST,
+                    port: Number(process.env.REDIS_PORT),
                     password: process.env.REDIS_PASSWORD || undefined,
                 }),
                 isGlobal: true,
