@@ -8,13 +8,17 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = Number(process.env.PORT) || 3000;
 
-  const config = new DocumentBuilder()
-    .setTitle('FinherArgApi')
-    .setDescription('Api for FinherArg')
-    .setVersion('1.0')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  if (process.env.NODE_ENV !== 'production') {
+    const config = new DocumentBuilder()
+      .setTitle('Quotes Api')
+      .setDescription('Quotes API Description')
+      .setVersion('1.1')
+      .addTag('quotes')
+      .build();
+
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api/swagger', app, document);
+  }
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
