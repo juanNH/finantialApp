@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoanCalculatorService = void 0;
 const common_1 = require("@nestjs/common");
 const roundToTwoDecimals_helper_1 = __importDefault(require("../common/helpers/roundToTwoDecimals.helper"));
+const loan_calculator_entity_1 = require("./entities/loan-calculator.entity");
 let LoanCalculatorService = class LoanCalculatorService {
     loanCalculatorTableFrenchSystem(loanCalculatorTableDto) {
         const { yearlyInterest, totalYears, loanDebth } = loanCalculatorTableDto;
@@ -29,19 +30,19 @@ let LoanCalculatorService = class LoanCalculatorService {
                 principalPaid = remainingBalance;
             }
             remainingBalance = (0, roundToTwoDecimals_helper_1.default)(remainingBalance - principalPaid);
-            amortizationTable.push({
+            amortizationTable.push(new loan_calculator_entity_1.AmortizationEntry({
                 month,
                 payment: monthlyPayment,
                 interestPaid: Number(interestPaid.toFixed(2)),
                 principalPaid: Number(principalPaid.toFixed(2)),
                 remainingBalance: Number(remainingBalance.toFixed(2)),
-            });
+            }));
         }
-        return {
-            totalToPay: (0, roundToTwoDecimals_helper_1.default)(monthlyPayment * totalMonths),
+        return new loan_calculator_entity_1.AmortizationTable({
             monthlyPayment: monthlyPayment,
-            amortizationTable,
-        };
+            totalToPay: (0, roundToTwoDecimals_helper_1.default)(monthlyPayment * totalMonths),
+            amortizationTable: amortizationTable,
+        });
     }
 };
 LoanCalculatorService = __decorate([

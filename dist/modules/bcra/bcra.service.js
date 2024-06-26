@@ -41,6 +41,7 @@ const axios_1 = require("@nestjs/axios");
 const https = __importStar(require("https"));
 const cache_manager_1 = require("@nestjs/cache-manager");
 const parseVariablesToObj_1 = require("./utils/parseVariablesToObj");
+const exceptions_1 = require("../common/exceptions");
 let BcraService = class BcraService {
     constructor(httpService, cacheManager) {
         this.httpService = httpService;
@@ -75,7 +76,11 @@ let BcraService = class BcraService {
     async findById(bcraVariableDto) {
         try {
             const data = await this.findAll();
-            return data.filter(item => item.idVariable === bcraVariableDto.idVariable)[0] || null;
+            const variable = data.filter(item => item.idVariable === bcraVariableDto.idVariable)[0] || null;
+            if (!variable) {
+                throw new exceptions_1.NotFoundException('BcraVariable with the specified ID not found');
+            }
+            return variable;
         }
         catch (err) {
             console.error(err);

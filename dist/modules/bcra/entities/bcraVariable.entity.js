@@ -11,25 +11,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BcraVariable = void 0;
 const graphql_1 = require("@nestjs/graphql");
+const swagger_1 = require("@nestjs/swagger");
 let BcraVariable = class BcraVariable {
 };
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, graphql_1.Field)((type) => graphql_1.Int),
     __metadata("design:type", Number)
 ], BcraVariable.prototype, "idVariable", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, graphql_1.Field)((type) => graphql_1.Int),
     __metadata("design:type", Number)
 ], BcraVariable.prototype, "cdSerie", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], BcraVariable.prototype, "descripcion", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], BcraVariable.prototype, "fecha", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], BcraVariable.prototype, "valor", void 0);

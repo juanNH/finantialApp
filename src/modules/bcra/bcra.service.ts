@@ -7,6 +7,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { parseVariablesToObj } from './utils/parseVariablesToObj';
 import { VariablesFormatted } from './entities/bcraVariables.entity';
 import { GetBcraVariableDto } from './dto/get-bcra-variable.dto';
+import { NotFoundException } from '../common/exceptions';
 
 @Injectable()
 export class BcraService {
@@ -35,7 +36,7 @@ export class BcraService {
                 status: number,
                 errorMessages: string[],
             }>(process.env.BCRA_API_URL + '/PrincipalesVariables');
-            const ttl = 1000 * 60 
+            const ttl = 1000 * 60
             const jsonArrayString = JSON.stringify(data.results);
             await this.cacheManager.set(key, jsonArrayString, ttl);
             return data.results
@@ -61,7 +62,11 @@ export class BcraService {
     async findById(bcraVariableDto: GetBcraVariableDto): Promise<BcraVariable> {
         try {
             const data = await this.findAll();
-            return data.filter(item => item.idVariable === bcraVariableDto.idVariable)[0] || null;
+            const variable = data.filter(item => item.idVariable === bcraVariableDto.idVariable)[0] || null
+            if (!variable) {
+                throw new NotFoundException('BcraVariable with the specified ID not found');
+            }
+            return variable;
         } catch (err) {
             console.error(err)
             throw err;

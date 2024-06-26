@@ -1,14 +1,14 @@
-interface AmortizationEntry {
+interface IAmortizationEntry {
     month: number;
     payment: number;
     interestPaid: number;
     principalPaid: number;
     remainingBalance: number;
 }
-interface AmortizationTable {
+interface IAmortizationTable {
     monthlyPayment: number,
     totalToPay: number,
-    amortizationTable: AmortizationEntry[];
+    amortizationTable: IAmortizationEntry[];
 }
 
-export { AmortizationEntry, AmortizationTable }
+export { IAmortizationEntry, IAmortizationTable }

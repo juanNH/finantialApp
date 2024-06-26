@@ -10,22 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetLoanCalculatorTableDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 const helpers_1 = require("../../common/helpers");
 class GetLoanCalculatorTableDto {
 }
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Loan debt amount', required: true }),
     (0, class_validator_1.IsInt)(),
     (0, class_transformer_1.Transform)(({ value }) => (0, helpers_1.toNumber)(value)),
     __metadata("design:type", Number)
 ], GetLoanCalculatorTableDto.prototype, "loanDebth", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Yearly interest rate' }),
     (0, class_validator_1.IsNumber)(),
     (0, class_transformer_1.Transform)(({ value }) => (0, helpers_1.toNumber)(value)),
     __metadata("design:type", Number)
 ], GetLoanCalculatorTableDto.prototype, "yearlyInterest", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ description: 'Total loan duration in years', required: true }),
     (0, class_validator_1.IsInt)(),
     (0, class_transformer_1.Transform)(({ value }) => (0, helpers_1.toNumber)(value)),
     __metadata("design:type", Number)

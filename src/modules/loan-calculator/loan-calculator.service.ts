@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { AmortizationEntry, AmortizationTable } from './interfaces';
 import roundToTwoDecimals from 'src/modules/common/helpers/roundToTwoDecimals.helper';
 import { GetLoanCalculatorTableDto } from './dto';
+import { AmortizationEntry, AmortizationTable } from './entities/loan-calculator.entity';
 
 @Injectable()
 export class LoanCalculatorService {
@@ -34,19 +34,19 @@ export class LoanCalculatorService {
 
       remainingBalance = roundToTwoDecimals(remainingBalance - principalPaid);
 
-      amortizationTable.push({
+      amortizationTable.push(new AmortizationEntry({
         month,
         payment: monthlyPayment,
         interestPaid: Number(interestPaid.toFixed(2)),
         principalPaid: Number(principalPaid.toFixed(2)),
         remainingBalance: Number(remainingBalance.toFixed(2)),
-      });
+      }));
     }
 
-    return {
-      totalToPay: roundToTwoDecimals(monthlyPayment*totalMonths),
+    return new AmortizationTable({
       monthlyPayment: monthlyPayment,
-      amortizationTable,
-    };
+      totalToPay: roundToTwoDecimals(monthlyPayment * totalMonths),
+      amortizationTable: amortizationTable,
+    });
   }
 }
