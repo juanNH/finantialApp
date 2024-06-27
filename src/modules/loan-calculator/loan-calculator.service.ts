@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import roundToTwoDecimals from 'src/modules/common/helpers/roundToTwoDecimals.helper';
+import roundToTwoDecimals from './../../modules/common/helpers/roundToTwoDecimals.helper';
 import { GetLoanCalculatorTableDto } from './dto';
 import { AmortizationEntry, AmortizationTable } from './entities/loan-calculator.entity';
 

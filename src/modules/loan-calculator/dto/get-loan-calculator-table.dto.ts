@@ -1,7 +1,7 @@
-import { ApiProperty, ApiQuery } from "@nestjs/swagger";
+import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 import { IsNumber, IsInt } from "class-validator";
-import { toNumber } from "src/modules/common/helpers";
+import { toNumber } from "./../../../modules/common/helpers";
 
 export class GetLoanCalculatorTableDto {
     
