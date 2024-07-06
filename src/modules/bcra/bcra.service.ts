@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BcraVariable } from './entities/bcraVariable.entity';
+import { BcraVariable as BcraVariableDB} from './entities/bcraVariableDB.entity';
 import { HttpService } from '@nestjs/axios';
 import * as https from 'https';
 import { Cache } from 'cache-manager';
@@ -8,12 +9,18 @@ import { parseVariablesToObj } from './utils/parseVariablesToObj';
 import { VariablesFormatted } from './entities/bcraVariables.entity';
 import { GetBcraVariableDto } from './dto/get-bcra-variable.dto';
 import { NotFoundException } from '../common/exceptions';
+import { GetBcraVariableHistoryDto } from './dto/get-bcra-variable-history.dto';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class BcraService {
     constructor(
         private readonly httpService: HttpService,
-        @Inject(CACHE_MANAGER) private cacheManager: Cache,
+        @Inject(CACHE_MANAGER) 
+        private readonly  cacheManager: Cache,
+        @InjectRepository(BcraVariableDB) 
+        private readonly  VariableDBRepository: Repository<BcraVariableDB>,
     ) {
         this.httpService.axiosRef.defaults.httpsAgent = new https.Agent({
             // Todo: try this when host change
@@ -57,6 +64,7 @@ export class BcraService {
 
     /**
      * this method format the array of principal variable into key=>value object.
+     * @param {GetBcraVariableDto} dto Dto.
      * @returns {VariablesFormatted} Object formatted to use key=>value.
      */
     async findById(bcraVariableDto: GetBcraVariableDto): Promise<BcraVariable> {
@@ -72,4 +80,20 @@ export class BcraService {
             throw err;
         }
     }
+
+
+        /**
+     * Service to get variable history by id.
+     * @param {GetBcraVariableHistoryDto} dto Dto.
+     * @returns {any} Object formatted to use key=>value.
+     */
+        async variableHistoryById(bcraVariableDto: GetBcraVariableHistoryDto): Promise<BcraVariableDB> {
+            const query = this.VariableDBRepository
+            .createQueryBuilder('variable')
+            .leftJoinAndSelect('variable.dataVariable', 'dataVariable')
+            .where('variable.idVariable = :idVariable', { idVariable: bcraVariableDto.idVariable })
+            .andWhere('dataVariable.fecha BETWEEN :dateStart AND :endDate', { dateStart: bcraVariableDto.dateStart, endDate: bcraVariableDto.endDate });
+            const data = await query.getOne();
+            return data;
+        }
 }

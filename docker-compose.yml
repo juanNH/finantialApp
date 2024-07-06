@@ -8,6 +8,17 @@ services:
      - '6379:6379'
     volumes:
      - redis:/data
-
+  postgres:
+      container_name: postgres  # Choose a meaningful name
+      image: postgres:16  # Or a specific version
+      ports:
+        - '5432:5432'  # Map container port to host port
+      environment:
+        - POSTGRES_PASSWORD=root  # Set an environment variable for password
+        - POSTGRES_USER=root  # Set an environment variable for username (optional)
+        - POSTGRES_DB=finantialDB  # Set an environment variable for database name (optional)
+      volumes:
+        - postgres_data:/var/lib/postgresql/data  # Persistent storage for database data
 volumes:
   redis:
+  postgres_data: 

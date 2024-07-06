@@ -24,3 +24,21 @@ export const toNumber = (value: string): number | undefined => {
 
     return numberValue;
 };
+
+
+/**
+ * Date cast.
+ *
+ * @param value string to transform to a date,
+ * @returns new date from string.
+ */
+
+export const toDate = (value: string): Date => {
+    const date = new Date(value);
+    if (isNaN(date.getTime())) {
+        throw new Error('Invalid date format');
+    }
+    return date;
+};
+
+

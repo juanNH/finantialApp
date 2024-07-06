@@ -1,20 +1,29 @@
 import { join } from 'path';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { LoanCalculatorModule } from './modules/loan-calculator/loan-calculator.module';
 import { BcraModule } from './modules/bcra/bcra.module';
 import { redisConfig } from './config/CacheConfig';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppConfig, PostgresConfig } from 'config';
 @Module({
   imports: [
+    ConfigModule.forRoot({isGlobal:true, cache:true, load:[AppConfig, PostgresConfig]}),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
+    TypeOrmModule.forRootAsync({
+      imports:[ConfigModule],
+      useFactory:(configService: ConfigService) => ({
+        ...configService.get('postgres')
+      }),
+      inject: [ConfigService]
+    }),
     CacheModule.register(redisConfig),
-    ConfigModule.forRoot(),
     LoanCalculatorModule,
     BcraModule,
   ],
