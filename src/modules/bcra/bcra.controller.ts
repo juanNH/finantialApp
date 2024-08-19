@@ -8,7 +8,6 @@ import { GetBcraVariableDto } from './dto/get-bcra-variable.dto';
 import { BcraService } from './bcra.service';
 import { ApiOperation, ApiResponse, ApiTags, getSchemaPath } from '@nestjs/swagger';
 import { BcraVariable as BcraVariableDB } from './entities/bcraVariableDB.entity';
-import { ErrorDTO } from '../common/dto/error.dto';
 import { ApiErrorDecorator } from '../common/decorator/error/error.decotrator';
 import { GetBcraVariableHistoryDto } from './dto/get-bcra-variable-history.dto';
 import { BcraVariable } from './entities/bcraVariable.entity';

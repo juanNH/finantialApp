@@ -82,11 +82,11 @@ export class BcraService {
     }
 
 
-        /**
+    /**
      * Service to get variable history by id.
      * @param {GetBcraVariableHistoryDto} dto Dto.
-     * @returns {any} Object formatted to use key=>value.
-     */
+     * @returns {BcraVariableDB} Object formatted to use key=>value.
+    */
         async variableHistoryById(bcraVariableDto: GetBcraVariableHistoryDto): Promise<BcraVariableDB> {
             const query = this.VariableDBRepository
             .createQueryBuilder('variable')

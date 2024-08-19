@@ -9,6 +9,7 @@ import { BcraModule } from './modules/bcra/bcra.module';
 import { redisConfig } from './config/CacheConfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfig, PostgresConfig } from 'config';
+import { UserModule } from './modules/user/user.module';
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal:true, cache:true, load:[AppConfig, PostgresConfig]}),
@@ -26,6 +27,7 @@ import { AppConfig, PostgresConfig } from 'config';
     CacheModule.register(redisConfig),
     LoanCalculatorModule,
     BcraModule,
+    UserModule,
   ],
 })
 export class AppModule { }
