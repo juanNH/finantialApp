@@ -13,7 +13,6 @@ async function bootstrap() {
       .setTitle('Quotes Api')
       .setDescription('Quotes API Description')
       .setVersion('1.1')
-      .addTag('quotes')
       .build();
 
     const document = SwaggerModule.createDocument(app, config);

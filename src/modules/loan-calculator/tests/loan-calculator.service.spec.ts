@@ -17,7 +17,7 @@ describe('LoanCalculatorService', () => {
     expect(service).toBeDefined();
   });
   it(`
-  loanCalculatorTableFrenchSystem 
+  loanCalculatorTableFrenchSystem Service
   should return TableFrenchSystem for dto
   {
     loanDebth = 1000,
