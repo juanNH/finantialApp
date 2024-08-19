@@ -6,7 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { LoanCalculatorModule } from './modules/loan-calculator/loan-calculator.module';
 import { BcraModule } from './modules/bcra/bcra.module';
-import { redisConfig } from './config/CacheConfig';
+import { RedisOptions } from './config/CacheConfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfig, PostgresConfig } from 'config';
 import { UserModule } from './modules/user/user.module';
@@ -24,7 +24,7 @@ import { UserModule } from './modules/user/user.module';
       }),
       inject: [ConfigService]
     }),
-    CacheModule.register(redisConfig),
+    CacheModule.registerAsync(RedisOptions),
     LoanCalculatorModule,
     BcraModule,
     UserModule,

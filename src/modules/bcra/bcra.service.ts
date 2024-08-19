@@ -43,12 +43,12 @@ export class BcraService {
                 status: number,
                 errorMessages: string[],
             }>(process.env.BCRA_API_URL + '/PrincipalesVariables');
-            const ttl = 1000 * 60
+            const ttl = 1000 * 60;
             const jsonArrayString = JSON.stringify(data.results);
             await this.cacheManager.set(key, jsonArrayString, ttl);
             return data.results
         } catch (error) {
-            console.log(error);
+            console.error(error);
             throw error;
         }
     }
