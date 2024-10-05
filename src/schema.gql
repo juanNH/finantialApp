@@ -2,6 +2,51 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type ExternalBcraVariable {
+  idVariable: Int!
+  cdSerie: Int!
+  descripcion: String!
+  fecha: String!
+  valor: String!
+}
+
+type FormattedBcraVariables {
+  dolarOficial: ExternalBcraVariable
+  dolarMayorista: ExternalBcraVariable
+  tna: ExternalBcraVariable
+  badlarBancoPrivNA: ExternalBcraVariable
+  tm20: ExternalBcraVariable
+  tasaPasesActivos1dia: ExternalBcraVariable
+  tasaPasesPasivoss1dia: ExternalBcraVariable
+  baibar: ExternalBcraVariable
+  tasaDepositos30dias: ExternalBcraVariable
+  tasaPrestamosAdelanteCtaCte: ExternalBcraVariable
+  tasaPrestamosPersonales: ExternalBcraVariable
+  baseMonetaria: ExternalBcraVariable
+  circulacionMonetaria: ExternalBcraVariable
+  efectivoPoderPublico: ExternalBcraVariable
+  efectivoEntidadesFinancieras: ExternalBcraVariable
+  depositoBancosCtaCtePesos: ExternalBcraVariable
+  depositoEfectivoEntidadesFinancieras: ExternalBcraVariable!
+  ctaCteNetoFUCO: ExternalBcraVariable
+  cajaAhorro: ExternalBcraVariable
+  plazoConInversionNoCEDROS: ExternalBcraVariable
+  m2Privado30diasVarAnual: ExternalBcraVariable
+  prestamosEntFinancierasPriv: ExternalBcraVariable
+  inflacionMensual: ExternalBcraVariable
+  inflacionInteranual: ExternalBcraVariable
+  inflacionEsperadaRem12meses: ExternalBcraVariable
+  cer: ExternalBcraVariable
+  uva: ExternalBcraVariable
+  uvi: ExternalBcraVariable
+  tpm: ExternalBcraVariable
+  badlarBancosPrivEA: ExternalBcraVariable
+  icl: ExternalBcraVariable
+  tasaOperacionesPasePasiva1dia: ExternalBcraVariable
+  pasesPasivosBCRASaldo: ExternalBcraVariable
+  reservasInternacionales: ExternalBcraVariable
+}
+
 type BcraVariable {
   idVariable: Int!
   cdSerie: Int!
@@ -10,44 +55,7 @@ type BcraVariable {
   valor: String!
 }
 
-type VariablesFormatted {
-  dolarOficial: BcraVariable
-  dolarMayorista: BcraVariable
-  tna: BcraVariable
-  badlarBancoPrivNA: BcraVariable
-  tm20: BcraVariable
-  tasaPasesActivos1dia: BcraVariable
-  tasaPasesPasivoss1dia: BcraVariable
-  baibar: BcraVariable
-  tasaDepositos30dias: BcraVariable
-  tasaPrestamosAdelanteCtaCte: BcraVariable
-  tasaPrestamosPersonales: BcraVariable
-  baseMonetaria: BcraVariable
-  circulacionMonetaria: BcraVariable
-  efectivoPoderPublico: BcraVariable
-  efectivoEntidadesFinancieras: BcraVariable
-  depositoBancosCtaCtePesos: BcraVariable
-  depositoEfectivoEntidadesFinancieras: BcraVariable!
-  ctaCteNetoFUCO: BcraVariable
-  cajaAhorro: BcraVariable
-  plazoConInversionNoCEDROS: BcraVariable
-  m2Privado30diasVarAnual: BcraVariable
-  prestamosEntFinancierasPriv: BcraVariable
-  inflacionMensual: BcraVariable
-  inflacionInteranual: BcraVariable
-  inflacionEsperadaRem12meses: BcraVariable
-  cer: BcraVariable
-  uva: BcraVariable
-  uvi: BcraVariable
-  tpm: BcraVariable
-  badlarBancosPrivEA: BcraVariable
-  icl: BcraVariable
-  tasaOperacionesPasePasiva1dia: BcraVariable
-  pasesPasivosBCRASaldo: BcraVariable
-  reservasInternacionales: BcraVariable
-}
-
 type Query {
-  variablesList: [BcraVariable!]!
-  variables: VariablesFormatted!
+  variablesList: [ExternalBcraVariable!]!
+  variables: FormattedBcraVariables!
 }
