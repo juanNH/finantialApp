@@ -4,12 +4,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
-import { LoanCalculatorModule } from './modules/loan-calculator/loan-calculator.module';
-import { BcraModule } from './modules/bcra/bcra.module';
 import { RedisOptions } from './config/CacheConfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfig, PostgresConfig } from 'config';
-import { UserModule } from './modules/user/user.module';
+import { BcraPresentationModule } from './contexts/bcra/presentation/bcra-presentation.module';
+import { LoanCalculatorPresentationModule } from './contexts/loan-calculator/presentation/loan-calculator-presentation.module';
+import { UserPresentationModule } from './contexts/user/presentation/user-presentation.module';
 @Module({
   imports: [
     ConfigModule.forRoot({isGlobal:true, cache:true, load:[AppConfig, PostgresConfig]}),
@@ -25,9 +25,9 @@ import { UserModule } from './modules/user/user.module';
       inject: [ConfigService]
     }),
     CacheModule.registerAsync(RedisOptions),
-    LoanCalculatorModule,
-    BcraModule,
-    UserModule,
+    LoanCalculatorPresentationModule,
+    BcraPresentationModule,
+    UserPresentationModule,
   ],
 })
 export class AppModule { }
